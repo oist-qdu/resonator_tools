@@ -164,8 +164,8 @@ class reflection_port(circlefit, save_load, plotting, calibration):
 				self.do_calibration(self.f_data[self._fid],self.z_data_raw[self._fid],ignoreslope=True,guessdelay=False,fixed_delay=electric_delay)
 		self.z_data = self.do_normalization(self.f_data,self.z_data_raw,delay,amp_norm,alpha,A2,frcal)
 		self.fitresults = self.circlefit(self.f_data[self._fid],self.z_data[self._fid],fr,Ql,refine_results=False,calc_errors=True)
-		self.z_data_sim = A2*(self.f_data-frcal)+self._S11_directrefl(self.f_data,fr=self.fitresults["fr"],Ql=self.fitresults["Ql"],Qc=self.fitresults["Qc"],a=amp_norm,alpha=alpha,delay=delay)
-		self.z_data_sim_norm = self._S11_directrefl(self.f_data,fr=self.fitresults["fr"],Ql=self.fitresults["Ql"],Qc=self.fitresults["Qc"],a=1.,alpha=0.,delay=0.)		
+		self.z_data_sim = A2*(self.f_data-frcal)+self._S11_directrefl(self.f_data,fr=self.fitresults["fr"],Ql=self.fitresults["Ql"],Qc=self.fitresults["Qc"],phi=self.fitresults["phi0"], a=amp_norm,alpha=alpha,delay=delay)
+		self.z_data_sim_norm = self._S11_directrefl(self.f_data,fr=self.fitresults["fr"],Ql=self.fitresults["Ql"],Qc=self.fitresults["Qc"],phi=self.fitresults["phi0"], a=1.,alpha=0.,delay=0.)
 		self._delay = delay
 		
 	def GUIfit(self):
@@ -235,11 +235,11 @@ class reflection_port(circlefit, save_load, plotting, calibration):
 		plt.show()	
 		plt.close()
 
-	def _S11_directrefl(self,f,fr=10e9,Ql=900,Qc=1000.,a=1.,alpha=0.,delay=.0):
+	def _S11_directrefl(self,f,fr=10e9,Ql=900,Qc=1000.,phi=0.,a=1.,alpha=0.,delay=.0):
 		'''
 		full model for notch type resonances
 		'''
-		return a*np.exp(complex(0,alpha))*np.exp(-2j*np.pi*f*delay) * ( 2.*Ql/Qc - 1. + 2j*Ql*(fr-f)/fr ) / ( 1. - 2j*Ql*(fr-f)/fr )	   
+		return a*np.exp(complex(0,alpha))*np.exp(-2j*np.pi*f*delay) * ( 2.*Ql/Qc*np.exp(-1j*phi) - 1. + 2j*Ql*(fr-f)/fr ) / ( 1. - 2j*Ql*(fr-f)/fr )
 		
 	def get_single_photon_limit(self,unit='dBm'):
 		'''
