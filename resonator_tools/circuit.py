@@ -92,9 +92,9 @@ class reflection_port(circlefit, save_load, plotting, calibration):
 		beta = self._periodic_boundary(theta+np.pi,np.pi) ###
 		offrespoint = complex((xc+r0*np.cos(beta)),(yc+r0*np.sin(beta)))
 		alpha = self._periodic_boundary(np.angle(offrespoint)+np.pi,np.pi)
-		#a = np.absolute(offrespoint)
+		a = np.absolute(offrespoint)
 		#alpha = np.angle(zc)
-		a = r0 + np.absolute(zc)
+		#a = r0 + np.absolute(zc)
 		return delay, a, alpha, fr, Ql, params[1], params[4]
 	
 	def do_normalization(self,f_data,z_data,delay,amp_norm,alpha,A2,frcal):
