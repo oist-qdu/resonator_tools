@@ -118,8 +118,13 @@ class reflection_port(circlefit, save_load, plotting, calibration):
 		#print("Ql from phasefit is: " + str(Ql))
 		Qi = Ql/(1.-r0)
 		Qc = 1./(1./Ql-1./Qi)
-	
-		results = {"Qi":Qi,"Qc":Qc,"Ql":Ql,"fr":fr,"theta0":theta0}
+
+		complQc = Qc*np.exp(1j*((-1.)*phi0))
+		Qc_dia_corr = 1./(1./complQc).real
+		Qi_dia_corr = 1./(1./Ql-1./Qc_dia_corr)
+
+
+		results = {"Qi":Qi,"Qc":Qc,"Ql":Ql, "Qi_dia_corr":Qi_dia_corr, "Qc_dia_corr":Qc_dia_corr, "fr":fr,"theta0":theta0, "phi0":phi0}
 	
 		#calculation of the error
 		p = [fr,Qc,Ql]
