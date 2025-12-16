@@ -23,7 +23,7 @@ class plotting(object):
 		imag = self.z_data_raw.imag
 		real2 = self.z_data_sim.real
 		imag2 = self.z_data_sim.imag
-		fig, ax = plt.subplot(221)
+		fig = plt.subplot(221)
 		plt.plot(real,imag,label='rawdata')
 		plt.plot(real2,imag2,label='fit')
 		plt.xlabel('Re(S21)')
