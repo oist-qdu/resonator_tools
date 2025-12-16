@@ -41,6 +41,7 @@ class plotting(object):
 		plt.xlabel('f (GHz)')
 		plt.ylabel('arg(|S21|)')
 		plt.legend()
+		plt.tight_layout()
 		plt.show()
 
 		return fig
