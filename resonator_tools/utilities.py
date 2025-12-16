@@ -23,7 +23,7 @@ class plotting(object):
 		imag = self.z_data_raw.imag
 		real2 = self.z_data_sim.real
 		imag2 = self.z_data_sim.imag
-		plt.subplot(221)
+		fig, ax = plt.subplot(221)
 		plt.plot(real,imag,label='rawdata')
 		plt.plot(real2,imag2,label='fit')
 		plt.xlabel('Re(S21)')
@@ -42,6 +42,8 @@ class plotting(object):
 		plt.ylabel('arg(|S21|)')
 		plt.legend()
 		plt.show()
+
+		return fig
 		
 	def plotcalibrateddata(self):
 		real = self.z_data.real
